@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
+require 'scaler_server'
+
+# TODO Add a way to kill that.
+Rack::Handler::WEBrick.run(Rack::Lint.new(ScalerServer.new),
+  :Port => 48067)

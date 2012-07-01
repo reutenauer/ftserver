@@ -1,0 +1,5 @@
+/* Put your Flickr API key here as a JSON file, with the following names */
+{
+  "api_key": "123ab789",
+  "shared_secret": "def46cba"
+}
