@@ -1,0 +1,12 @@
+This is ftserver, the Flickr Transform server.
+
+INSTALLATION
+
+It should be enough to run:
+
+1. git clone https://github.com/reutenauer/ftserver.git
+2. Copy your Flickr API keys to config/flickr-keys.json in the format defined there.
+3. Run bundle install
+4. Start the server with bundle exec ruby -Iapp start-server
+
+The service is then available on http://localhost:48067/

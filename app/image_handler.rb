@@ -8,7 +8,7 @@ require 'fileutils'
 require 'flickraw'
 require 'rmagick'
 
-module FlickrScaler
+module FTServer
   class InternalError < Exception
   end
 
@@ -27,7 +27,7 @@ module FlickrScaler
     end
   end
 
-  class Scaler
+  class ImageHandler
     attr_reader :tempdir # For tests only FIXME
 
     def initialize
