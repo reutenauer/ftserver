@@ -29,7 +29,7 @@ Therefore, it should be enough to run:
 convenient and robust way to deal with configuration issues in such an
 application.)
 
-The service is then available on http://localhost:48067/
+The service is then available on [http://localhost:48067/](http://localhost:48067/)
 
 See section “Usage” below for usage notes, and examples.
 
@@ -46,7 +46,7 @@ containing the link to the scaled image, with the text overlaid on the
 bottom right corner if applicable.
 
 Examples
--------
+--------
 
 The server will always be accessible from the local machine as
 localhost; that what I’ve used to test it, as I had no public IPv4.
