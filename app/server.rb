@@ -51,7 +51,7 @@ module FTServer
           new_id = id.to_s + '_' + Time.now.to_i.to_s
           new_filename = new_id + '_' + rand(1048576).to_s + '.jpg'
           FileUtils.cp(File.join(handler.tempdir.path, 'flickr_image_new.jpg'), File.join(@@datadir, new_filename))
-          # handler.tempdir.delete # Not yet.
+          handler.tempdir.delete
 
           image_url = "http://#{env['SERVER_NAME']}:#{env['SERVER_PORT']}/images/#{new_filename}"
           user_message += "<p>Your image is here: <a href='#{image_url}'>#{image_url}</a><p>"
