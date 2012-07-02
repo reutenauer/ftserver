@@ -6,10 +6,13 @@
 require 'tempfile' # For Dir.tmpdir
 require 'fileutils'
 require 'flickraw'
-require 'RMagick' # Make case-sensitive filesystems happy.
+require 'RMagick' # Make case-sensitive filesytems happy.
 
 module FTServer
   class InternalError < Exception
+  end
+
+  class NoSuchFlickrPhotoID < Exception
   end
 
   # This is the kind of thing one writes every six months, it seems.
@@ -17,7 +20,7 @@ module FTServer
     attr_reader :path
 
     def initialize
-      @path = File.join(Dir.tmpdir, "scale_flickr_#{Time.now.to_i}_#{rand(1048576)}")
+      @path = File.join(Dir.tmpdir, "ftserver_image_#{Time.now.to_i}_#{rand(1048576)}")
       Dir.mkdir(@path)
     end
 
@@ -28,7 +31,7 @@ module FTServer
   end
 
   class ImageHandler
-    attr_reader :tempdir # For tests only FIXME
+    attr_reader :tempdir
 
     def initialize
       @tempdir = MyTempDir.new
@@ -37,13 +40,16 @@ module FTServer
       keyfile.close
       FlickRaw.api_key = @key['api_key']
       FlickRaw.shared_secret = @key['shared_secret']
-      @flickr = FlickRaw::Flickr.new # TODO API keys
+      @flickr = FlickRaw::Flickr.new
       @flickr_photos = @flickr.photos
     end
 
     def retrieve(id)
-      # TODO something if photo_id invalid
-      sizes = @flickr_photos.getSizes(:photo_id => id)
+      begin
+        sizes = @flickr_photos.getSizes(:photo_id => id)
+      rescue FlickRaw::FailedResponse
+        raise NoSuchFlickrPhotoID.new("No such Flickr photo id: #{id}.")
+      end
       sizes.each do |size|
         if size['label'] == "Medium 800"
           @source = size['source']
@@ -55,14 +61,11 @@ module FTServer
 
       @source = sizes.last['source'] unless @source # Should be the largest available
 
-      # Convention: only ‘retrieve’ chdir’s to the temporary directory. # FIXME That’s not realistic
       pwd = FileUtils.pwd
       FileUtils.chdir(@tempdir.path)
       # We use curl.
       origfilename = "flickr_image_original.jpg" # Note: not necessarily JPEG!
       retvalue = `curl "#{@source}" >"#{origfilename}"`
-      puts "retvalue is #{retvalue}"
-      # TODO Ruby seems to not know about that.
       unless File.file?(origfilename)
         raise InternalError.new("Could not retrieve photo from Flickr.")
       end
@@ -73,7 +76,6 @@ module FTServer
       pwd = FileUtils.pwd
       FileUtils.chdir(@tempdir.path)
 
-      puts "Hello I’m in #{FileUtils.pwd}"
       original = Magick::Image.read('flickr_image_original.jpg').first # TODO test rest of the array
 
       # Scale to 400x300, fitting image to that size (i. e. not cropping).
@@ -81,10 +83,9 @@ module FTServer
 
       # Overlay text if application
       if text and text.length > 0
-        # FIXME No idea what to do with the draw object here.
-        new_image.annotate(Magick::Draw.new, 0, 0, 0, 0, text) do # TODO better placement
+        new_image.annotate(Magick::Draw.new, 0, 0, 0, 0, text) do
           self.gravity = Magick::SouthEastGravity # Bottom right corner
-          self.fill = 'white' # TODO some transparency?
+          self.fill = 'white'
           self.pointsize = 18
         end
       end
