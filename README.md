@@ -20,11 +20,15 @@ Therefore, it should be enough to run:
 
 1. git clone https://github.com/reutenauer/ftserver.git
 2. Copy your Flickr API keys to config/flickr-keys.json in the format defined there.
-   (the API key should be called “api_key,” and the secret key “shared_secret”)
+   The API key should be called “api_key,” and the secret key “shared_secret”.
 3. Run bundle install
 4. Start the server from the top-level directory with:
 
        bundle exec ruby -Iapp start-server
+
+(Including the app directory in the library path seemed to be the most
+convenient and robust way to deal with configuration issues in such an
+application.)
 
 The service is then available on http://localhost:48067/
 
@@ -48,7 +52,7 @@ Examples
 The server will always be accessible from the local machine as
 localhost; that what I’ve used to test it, as I had no public IPv4.
 
-- http://localhost:48067/?flickr_id=123 (*invalid photo ID*)
+- [http://localhost:48067/?flickr_id=123] http://localhost:48067/?flickr_id=123 (*invalid photo ID*)
 - http://localhost:48067/?flickr_id=7460204746 (*valid ID*)
 - http://localhost:48067/?flickr_id=7460204746&text=In%20the%20style%20Faberge (*valid ID plus text*) – Alas, no UTF-8!
 - http://localhost:48067/images/7460204746_1341258930_473646.jpg (*result of above request*)
