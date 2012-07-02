@@ -43,7 +43,10 @@ Usage
 Send an HTTP GET request to http://&lt;server&gt;:48067/?flickr_id=&lt;id&gt;&amp;text=&lt;overlay&gt;
 (the latter part being optional).  The server then serves an HTML page
 containing the link to the scaled image, with the text overlaid on the
-bottom right corner if applicable.
+bottom right corner if applicable.  To embed the URL in the body of the
+response if admittedly a very simplistic API, but without a full
+specification of how the service was supposed to be used, it seemed a
+reasonable choice.
 
 Examples
 --------
