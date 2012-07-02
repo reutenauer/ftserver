@@ -6,7 +6,7 @@
 require 'tempfile' # For Dir.tmpdir
 require 'fileutils'
 require 'flickraw'
-require 'rmagick'
+require 'RMagick' # Make case-sensitive filesystems happy.
 
 module FTServer
   class InternalError < Exception
