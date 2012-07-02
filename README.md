@@ -3,10 +3,9 @@ This is ftserver, the Flickr Transform server.
 Copyright (c) Arthur Reutenauer, London, July 2012.
 
 The files in this repository are available under the terms of the
-Creative Common Attribution License (CC-BY), either version 3.0 thereof
-or, at your option, any later version.  Version 3.0 is available at
-
-    http://creativecommons.org/licenses/by/3.0/
+Creative Common Attribution License (CC-BY), either
+[http://creativecommons.org/licenses/by/3.0/] (version 3.0) thereof or,
+at your option, any later version.
 
 Installation
 ===========
@@ -41,8 +40,8 @@ libmagickcore-dev first, but I’m not sure this was really needed).
 Usage
 =====
 
-Send an HTTP GET request to http://[server]:48067/?flickr_id=[id]&text=[overlay]
-(the latter part being optional).  The server then serves an HTML page
+Send an HTTP GET request to http://[server]:48067/?flickr_id=[id]&text=[overlay] ,
+the latter part being optional.  The server then serves an HTML page
 containing the link to the scaled image, with the text overlaid on the
 bottom right corner if applicable.
 
@@ -52,10 +51,10 @@ Examples
 The server will always be accessible from the local machine as
 localhost; that what I’ve used to test it, as I had no public IPv4.
 
-- [http://localhost:48067/?flickr_id=123] http://localhost:48067/?flickr_id=123 (*invalid photo ID*)
-- http://localhost:48067/?flickr_id=7460204746 (*valid ID*)
-- http://localhost:48067/?flickr_id=7460204746&text=In%20the%20style%20Faberge (*valid ID plus text*) – Alas, no UTF-8!
-- http://localhost:48067/images/7460204746_1341258930_473646.jpg (*result of above request*)
+- [http://localhost:48067/?flickr_id=123] (http://localhost:48067/?flickr_id=123) (*invalid photo ID*)
+- [http://localhost:48067/?flickr_id=7460204746] (http://localhost:48067/?flickr_id=7460204746) (*valid ID*)
+- [http://localhost:48067/?flickr_id=7460204746&text=In%20the%20style%20Faberge] (http://localhost:48067/?flickr_id=7460204746&text=In%20the%20style%20Faberge) (*valid ID plus text*) – Alas, no UTF-8!
+- [http://localhost:48067/images/7460204746_1341258930_473646.jpg] (http://localhost:48067/images/7460204746_1341258930_473646.jpg) (*result of above request*)
 
 Notes on the architecture
 =========================
