@@ -53,7 +53,7 @@ module FTServer
           FileUtils.cp(File.join(handler.tempdir.path, 'flickr_image_new.jpg'), File.join(@@datadir, new_filename))
           # handler.tempdir.delete # Not yet.
 
-          user_message += "<p>http://#{env['SERVER_NAME']}/images/#{new_filename}<p>"
+          user_message += "<p>http://#{env['SERVER_NAME']}:#{env['SERVER_PORT']}/images/#{new_filename}<p>"
         rescue NoSuchFlickrPhotoID => err
           user_message = err.message
         end
