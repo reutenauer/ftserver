@@ -63,9 +63,14 @@ module FTServer
 
       pwd = FileUtils.pwd
       FileUtils.chdir(@tempdir.path)
-      # We use curl.
+      # I could not seem to find bindings of curl or wget for ruby that
+      # were easy to install, at least on Mac OS, and thus decided to
+      # call an external binary directly.
+      # I chose curl since, as I remember, it is installed by default on
+      # Mac OS X, which wget is not.  Both programs are of course
+      # packaged for all major Linux distributions. – Arthur
       origfilename = "flickr_image_original.jpg" # Note: not necessarily JPEG!
-      retvalue = `curl "#{@source}" >"#{origfilename}"`
+      `curl "#{@source}" >"#{origfilename}"`
       unless File.file?(origfilename)
         raise InternalError.new("Could not retrieve photo from Flickr.")
       end
